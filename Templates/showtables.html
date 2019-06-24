@@ -1,0 +1,66 @@
+{% extends 'base/layout.html' %}
+{% block content %}
+
+<div class="container">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <!-- <input type="submit" class="btn btn-warning" value="search"> -->
+        <button type="submit" class="btn btn-warning">Search</button>
+    </form>
+</div>
+{% if book %}
+<div class="container mt-5"  >
+        
+        <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Book name</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Purchase date</th>
+                    <th scope="col">Genre</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for bk in book %}
+                    <!-- {{bk.name}} -->
+                   
+                  <tr>
+                    <th scope="row">{{bk.id}}</th>
+                    <td>{{bk.name}}</td>
+                    <td>{{bk.book_author}}</td>
+                    <td>{{bk.purchase_date}}</td>
+                    <td>
+                        {% for g in bk.genre.all %}
+                        {{g.genre_name}}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="/editbook/{{bk.id}}">
+                            <span class="text-muted">Edit</span>
+                        </a>
+                        <a href="/deletebook/{{bk.id}}">
+                            <span class="text-danger">Delete</span>
+                        
+                        </a>
+                    </td>
+                  </tr>
+                  <!-- <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr> -->
+                  <!-- <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr> -->
+                    {% endfor %}
+                </tbody>
+        </table>
+</div>
+{% endif %}
+{% endblock %}
